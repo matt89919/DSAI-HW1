@@ -73,20 +73,19 @@ if __name__ == '__main__':
     x_train, y_train = create_data(data,15, 15)    
     x_train, y_train, x_test, y_test = splitData(x_train,y_train)
 
+#train
 regressor= buildManyToManyModel(x_train.shape)
 regressor.fit(x_train, y_train, epochs = 180 )
-
+#predict
 predict_y = regressor.predict(x_test)
 predict_y = scaler.inverse_transform(predict_y)
-# print(predict_y, np.array(data_val[-15:]))
-# plt.plot(np.array(data_val[-15:]), 'b', label='actual')
-# plt.plot(predict_y[-1][:] , 'r', label='predict')
-# data_val=np.array(data_val[-15:])
 
+#evaluate
 rmse=0
-rmse = mean_squared_error(data_val[-15:], predict_y[-1][:], squared=False)
+rmse = mean_squared_error(data_val[-15:], predict_y[1][:], squared=False)
 print(rmse)
 
+#output
 date=[n for n in range(20220330,20220332)]
 date.extend([n for n in range(20220401,20220414)])
 submission=pd.DataFrame({
